@@ -1,13 +1,13 @@
 # Day-28-Investigating-a-Mythic-C2-Framework
 
-By the end of this challenge, you’ll know how to investigate a common C2 (Command and Control) framework called Mythic and what telemetry to look for during an investigation. Specifically, we will dive into the agent named `svchost-Phenoixrocks.exe` and trace its activities in our Elastic environment.
+By the end of this challenge, you’ll know how to investigate a common C2 (Command and Control) framework called Mythic and what telemetry to look for during an investigation. Specifically, we will dive into the agent named `svchost-aurora.exe` and trace its activities in our Elastic environment.
 
 Let’s get started!
 
 ## Step 1: Initial Investigation — Discovering the Agent
-To begin, head over to your Elastic Web GUI, click the hamburger icon, and navigate to Discover. Make sure to set the time frame to 30 days. Then search for the Mythic C2 agent `svchost-Phenoixrocks.exe` (or whatever name your agent might be using in your environment).
+To begin, head over to your Elastic Web GUI, click the hamburger icon, and navigate to Discover. Make sure to set the time frame to 30 days. Then search for the Mythic C2 agent `svchost-aurora.exe` (or whatever name your agent might be using in your environment).
 
-Let’s start investigating the chain of events. Imagine, for the sake of practice, that we didn’t already know the agent’s name was `svchost-Phenoixrocks.exe`. How would we identify a C2 agent?
+Let’s start investigating the chain of events. Imagine, for the sake of practice, that we didn’t already know the agent’s name was `svchost-aurora.exe`. How would we identify a C2 agent?
 
 ## Step 2: Identifying C2 Activity
 There are a few ways to detect a C2 framework in operation:
@@ -30,7 +30,7 @@ Let’s leverage the dashboards we created in previous challenge:
 
 At the top of this dashboard, we can see a list of process creations like `Powershell`, `cmd.exe`, and `rundll32.exe`. I pay close attention to `rundll32.exe`, as it is often used by malware to load DLLs and execute malicious activities.
 
-In this case, I found an unusual executable under the directory `C:\Users\Public\Downloads`. Even if it wasn’t called `svchost-Phenoixrocks.exe` and instead something more generic like `update.exe`, I would still investigate it. The reason? Executables in public directories initiating connections to external IP addresses — especially on port 80 — raise red flags.
+In this case, I found an unusual executable under the directory `C:\Users\Public\Downloads`. Even if it wasn’t called `svchost-aurora.exe` and instead something more generic like `update.exe`, I would still investigate it. The reason? Executables in public directories initiating connections to external IP addresses — especially on port 80 — raise red flags.
 
 ## Step 4: Diving Deeper — Timeline of Events
 Now, let’s pretend we’re doing a threat hunt and stumbled upon an outbound Powershell connection that looks suspicious. Here’s how we’ll investigate further:
