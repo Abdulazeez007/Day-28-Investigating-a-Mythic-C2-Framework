@@ -28,9 +28,13 @@ Let’s leverage the dashboards we created in previous challenge:
 - Click the hamburger icon, go to Dashboards under Analytics, and select the **Pheonix-Suspicious Activity** dashboard.  
 - Make sure the time frame is set to 30 days.
 
+  ![Alt text](https://raw.githubusercontent.com/Virus192/Day-28-Investigating-a-Mythic-C2-Framework/refs/heads/main/Images/photo_6039832077244940892_w.jpg)
+
 At the top of this dashboard, we can see a list of process creations like `Powershell`, `cmd.exe`, and `rundll32.exe`. I pay close attention to `rundll32.exe`, as it is often used by malware to load DLLs and execute malicious activities.
 
-In this case, I found an unusual executable under the directory `C:\Users\Public\Downloads`. Even if it wasn’t called `svchost-aurora.exe` and instead something more generic like `update.exe`, I would still investigate it. The reason? Executables in public directories initiating connections to external IP addresses — especially on port 80 — raise red flags.
+In this case, I found an unusual executable under the directory `C:\Users\Public\Downloads`. Even if it wasn’t called `svc-aurora.exe` and instead something more generic like `update.exe`, I would still investigate it. The reason? Executables in public directories initiating connections to external IP addresses — especially on port 80 — raise red flags.
+
+![Alt text](https://raw.githubusercontent.com/Virus192/Day-28-Investigating-a-Mythic-C2-Framework/refs/heads/main/Images/photo_6039832077244940895_w.jpg)
 
 ## Step 4: Diving Deeper — Timeline of Events
 Now, let’s pretend we’re doing a threat hunt and stumbled upon an outbound Powershell connection that looks suspicious. Here’s how we’ll investigate further:
@@ -41,7 +45,7 @@ Copy the destination IP from the suspicious connection and search for it in Elas
 event.code: 3 AND winlog.event_data.DestinationIp: <Your Destination IP>
 ```
 
-## Building a Timeline of Events
+![Alt text](https://raw.githubusercontent.com/Virus192/Day-28-Investigating-a-Mythic-C2-Framework/refs/heads/main/Images/photo_6037580277431256057_w.jpg)
 
 We can now build a timeline of events:
 
@@ -52,14 +56,15 @@ If you have Sysmon telemetry, check the process GUID for correlation. The proces
 
 ### File Creation and Execution
 
-- **Sep 21, 2024 @ 19:05:21.104**: Event Code 11 (File Created) — A file named `svchost-Pheonixrocks.exe` was created in `C:\Users\Public\Downloads` using a PowerShell terminal.
-- **Sep 21, 2024 @ 19:05:23.610**: Event Code 29 (File Executed) — The file `svchost-Pheonixrocks.exe` was executed from the Downloads folder.
+- **Sep 21, 2024 @ 19:05:21.104**: Event Code 11 (File Created) — A file named `svc-aurora.exe` was created in `C:\Users\Public\Downloads` using a PowerShell terminal.
+- **Sep 21, 2024 @ 19:05:23.610**: Event Code 29 (File Executed) — The file `svc-aurora.exe` was executed from the Downloads folder.
+
 
 Using SHA1 hash values, we can further investigate the file’s identity and behavior. This hash will help in tracking the origin and other instances of the file across the system.
 
 ## Step 5: Correlating the Process Chain
 
-The process GUID from `svchost-Pheonixrocks.exe` allows us to backtrack the event chain. Initially, we discovered the PowerShell session, and now we can see that this session was responsible for retrieving and executing `svchost-Pheonixrocks.exe`.
+The process GUID from `svchost-aurora.exe` allows us to backtrack the event chain. Initially, we discovered the PowerShell session, and now we can see that this session was responsible for retrieving and executing `svchost-aurora.exe`.
 
 Let’s use this process GUID to identify related processes:
 
