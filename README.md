@@ -39,6 +39,7 @@ Copy the destination IP from the suspicious connection and search for it in Elas
 
 ```plaintext
 event.code: 3 AND winlog.event_data.DestinationIp: <Your Destination IP>
+```
 
 ## Building a Timeline of Events
 
