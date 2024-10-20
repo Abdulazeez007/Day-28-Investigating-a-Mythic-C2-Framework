@@ -23,7 +23,7 @@ There are a few ways to detect a C2 framework in operation:
    If you have Sysmon telemetry, use event ID 3 to track network creations and process executions. Look for processes like `rundll32.exe`, often used by malware to load DLL files for execution.
 
 ## Step 3: Using Dashboards to Analyze Process Activity
-Let’s leverage the dashboards we created in previous blogs:
+Let’s leverage the dashboards we created in previous challenge:
 
 - Click the hamburger icon, go to Dashboards under Analytics, and select the **Pheonix-Suspicious Activity** dashboard.  
 - Make sure the time frame is set to 30 days.
@@ -85,8 +85,8 @@ Now, every Mythic C2 alert will automatically create a ticket in your OS Ticket 
 
 ## Conclusion: Wrapping Up the Investigation
 
-In this blog, we peeled back the layers of a Mythic C2 agent, following its trail from initial network connections to suspicious process creations and file executions. By diving into the telemetry and piecing together the timeline, we built a clear picture of the C2 activity lurking within the system.
+In this Challenge, we peeled back the layers of a Mythic C2 agent, following its trail from initial network connections to suspicious process creations and file executions. By diving into the telemetry and piecing together the timeline, we built a clear picture of the C2 activity lurking within the system.
 
 We didn’t stop there — we took it a step further by automating our defense, setting up a webhook in OS Ticket to ensure every future alert is swiftly documented and tracked for action.
 
-But the investigation doesn’t end here! In the next blog, we’ll explore how to install and configure Elastic EDR (Elastic Defend) to add another layer of protection and wrap up our 30-day SOC challenge on a high note. The journey continues, so stay tuned for more insights and powerful tools to secure your environment!
+But the investigation doesn’t end here! In the next challenge, we’ll explore how to install and configure Elastic EDR (Elastic Defend) to add another layer of protection and wrap up our 30-day SOC challenge on a high note. The journey continues, so stay tuned for more insights and powerful tools to secure your environment!
